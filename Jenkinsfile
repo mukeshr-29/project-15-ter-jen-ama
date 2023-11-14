@@ -4,6 +4,9 @@ pipeline{
         jdk 'jdk17'
         nodejs 'node16'
     }
+    environment{
+        SCANNER_HOME=tool 'sonar_scanner'
+    }
     stages{
         stage('clean work space'){
             steps{
@@ -18,9 +21,9 @@ pipeline{
         stage('sonar analysis'){
             steps{
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonarqube'){
+                    withSonarQubeEnv('sonarqube'){
                         sh '''
-                            -Dsonar.sources=./ \
+                        $SCANNER_HOME/bin/sonar-scanner -dsonar.projectName=amazon \
                             -Dsonar.projectKey=amazon 
                         '''
                     }
