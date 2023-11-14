@@ -23,7 +23,7 @@ pipeline{
                 script{
                     withSonarQubeEnv('sonarqube'){
                         sh '''
-                        $SCANNER_HOME/bin/sonar-scanner -dsonar.projectName=amazon \
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=amazon \
                             -Dsonar.projectKey=amazon 
                         '''
                     }
