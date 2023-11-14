@@ -50,7 +50,25 @@ pipeline{
         }
         stage('file scan'){
             steps{
-                sh 'trivy fs .'
+                sh 'trivy fs . > TRIVYFS.txt'
+            }
+        }
+        stage('docker build & push'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                        sh '''
+                        docker build -t amazon-project .
+                        docker tag amazon-project mukeshr29/amazon-project
+                        docker push mukeshr29/amazon-project
+                        '''
+                    }
+                }
+            }
+        }
+        stage('trivy img scan'){
+            steps{
+                sh 'trivy image mukeshr29/amazon-project'
             }
         }
     }
