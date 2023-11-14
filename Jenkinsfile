@@ -42,5 +42,16 @@ pipeline{
                 sh 'npm install'
             }
         }
+        stage('dependency check'){
+            steps{
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+        stage('file scan'){
+            steps{
+                sh 'trivy fs .'
+            }
+        }
     }
 }
