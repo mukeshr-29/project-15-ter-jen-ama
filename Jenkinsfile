@@ -71,5 +71,10 @@ pipeline{
                 sh 'trivy image mukeshr29/amazon-project'
             }
         }
+        stage('run my container'){
+            steps{
+                sh 'docker run -d --name amazon-app -p 3000:3000  mukeshr29/amazon-project'
+            }
+        }
     }
 }
