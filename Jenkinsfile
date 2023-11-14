@@ -20,7 +20,7 @@ pipeline{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonarqube'){
                         sh '''
-                            -Dsonar.sources=. \
+                            -Dsonar.sources=./ \
                             -Dsonar.projectKey=amazon 
                         '''
                     }
